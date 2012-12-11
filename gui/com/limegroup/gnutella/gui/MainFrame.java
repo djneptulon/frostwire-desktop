@@ -54,6 +54,7 @@ import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
+import com.limegroup.gnutella.gui.fw6ui.MediaPlayerRowPanel;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
@@ -103,6 +104,8 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     private StatusLine STATUS_LINE;
 
+    private MediaPlayerRowPanel MEDIAPLAYER_PANEL;
+    
     /**
      * Handle the <tt>MenuMediator</tt> for use in changing the menu
      * depending on the selected tab.
@@ -240,7 +243,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         contentPane.add(TABBED_PANE, BorderLayout.CENTER);
 
         //ADD STATUS LINE
-        contentPane.add(getStatusLine().getComponent(), BorderLayout.PAGE_END);
+        getStatusLine();
+        
+        contentPane.add(getMediaPlayerRowPanel(), BorderLayout.PAGE_END);
 
         ThemeMediator.addThemeObserver(this);
         GUIMediator.addRefreshListener(this);
@@ -434,6 +439,14 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             STATUS_LINE = new StatusLine();
         }
         return STATUS_LINE;
+    }
+    
+    final private MediaPlayerRowPanel getMediaPlayerRowPanel() {
+    	if (MEDIAPLAYER_PANEL == null) {
+    		MEDIAPLAYER_PANEL = new MediaPlayerRowPanel();
+    	}
+    	
+    	return MEDIAPLAYER_PANEL;
     }
 
     /**
