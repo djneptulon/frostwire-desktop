@@ -2,11 +2,8 @@ package com.limegroup.gnutella.gui.fw6ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 
 public class MediaPlayerRowPanel extends JPanel {
 	

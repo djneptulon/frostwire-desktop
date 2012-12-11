@@ -331,24 +331,13 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         });
     }
 
-    private String stopAndPrepareFilename() {
-        mplayer.stop();
-        setVolume(volume);
-
-        String filename = "";
-        if (currentMedia.getFile() != null) {
-            filename = currentMedia.getFile().getAbsolutePath();
-        } else if (currentMedia.getURL() != null) {
-            filename = currentMedia.getURL().toString();
-        } else if (currentMedia.getPlaylistItem() != null) {
-            filename = currentMedia.getPlaylistItem().getFilePath();
-        }
-        return filename;
-    }
-
     /** Force showing or not the media player window */
     public void playMedia(boolean showPlayerWindow) {
-        String filename = stopAndPrepareFilename();
+        
+    	mplayer.stop();
+        setVolume(volume);
+        
+    	String filename = currentMedia.getPreparedFilename();
 
         if (filename.length() > 0) {
             MPlayerMediator mplayerMediator = MPlayerMediator.instance();
@@ -368,10 +357,13 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      */
     public void playMedia() {
 
-        String filename = stopAndPrepareFilename();
+    	mplayer.stop();
+        setVolume(volume);
 
+        String filename = currentMedia.getPreparedFilename();
+        boolean isVideoFile = currentMedia.isVideoMediaSource();
+        
         if (filename.length() > 0) {
-            boolean isVideoFile = MediaType.getVideoMediaType().matches(filename);
             MPlayerMediator mplayerMediator = MPlayerMediator.instance();
 
             if (mplayerMediator != null) {
@@ -853,11 +845,15 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     @Override
     public void onUIPlayPressed() {
         MediaPlaybackState curState = mplayer.getCurrentState();
-
+        
         if (curState == MediaPlaybackState.Playing || curState == MediaPlaybackState.Paused) {
             togglePause();
         } else if (curState == MediaPlaybackState.Closed) {
             playMedia();
+        } else {
+            if (GUIMediator.instance().getSelectedTab() != null && GUIMediator.instance().getSelectedTab().equals(GUIMediator.Tabs.LIBRARY)) {
+	            LibraryMediator.instance().playCurrentSelection();
+	        }
         }
     }
 
@@ -868,12 +864,55 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
     @Override
     public void onUIFastForwardPressed() {
-        fastForward();
+        
+    	MediaSource currentMedia = getCurrentMedia();
+
+    	if (currentMedia != null) {
+    		
+    		if (currentMedia.isVideoMediaSource()) {
+    			
+    			// for videos types, handle with seek-like ff
+    			fastForward();
+    		
+    		} else {
+    			
+    			// handle other media types (assume playlist functionality)
+                MediaSource nextSong = null;
+
+                if (isShuffle()) {
+                    nextSong = getNextRandomSong(currentMedia);
+                } else {
+                    nextSong = getNextMedia(currentMedia);
+                }
+
+                if (nextSong != null) {
+                    asyncLoadMedia(nextSong, true, true);
+                }
+    		}
+        }
     }
 
     @Override
     public void onUIRewindPressed() {
-        rewind();
+    	MediaSource currentMedia = getCurrentMedia();
+
+    	if (currentMedia != null) {
+    		
+    		if (currentMedia.isVideoMediaSource()) {
+    			
+    			// for videos types, handle with seek-like rewind
+    			rewind();
+    		
+    		} else {
+    			
+    			// handle other media types (assume playlist functionality)
+                MediaSource previousSong = getPreviousMedia(currentMedia);
+
+                if (previousSong != null) {
+                    asyncLoadMedia(previousSong, true, true);
+                }
+    		}
+        }
     }
 
     @Override

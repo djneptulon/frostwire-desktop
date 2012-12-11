@@ -12,11 +12,16 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import com.frostwire.gui.player.MPlayerUIEventHandler;
+import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaPlayerListener;
+import com.frostwire.gui.player.MediaSource;
+import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
-public class MediaPlayerButtonPanel extends Box {
+public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
 	
 	private static final long serialVersionUID = 85874961592690100L;
 	
@@ -32,6 +37,8 @@ public class MediaPlayerButtonPanel extends Box {
 		super(BoxLayout.LINE_AXIS);
 		
 		initializeUI();
+		
+		MediaPlayer.instance().addMediaPlayerListener(this);
 	}
 	
 	private void initializeUI() {
@@ -41,28 +48,28 @@ public class MediaPlayerButtonPanel extends Box {
 		JButton playButton = createMediaButton("fc_play", I18n.tr("Play"));
 		playButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				MPlayerUIEventHandler.instance().onPlayPressed();
 			}
 		});
 		
 		JButton pauseButton = createMediaButton("fc_pause", I18n.tr("Pause"));
 		pauseButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				MPlayerUIEventHandler.instance().onPausePressed();
 			}
 		});
 		
 		JButton nextButton = createMediaButton("fc_next", I18n.tr("Next"));
 		nextButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				MPlayerUIEventHandler.instance().onFastForwardPressed();
 			}
 		});
 		
 		JButton prevButton = createMediaButton("fc_previous", I18n.tr("Previous"));
 		prevButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				MPlayerUIEventHandler.instance().onRewindPressed();
 			}
 		});
 
@@ -113,4 +120,28 @@ public class MediaPlayerButtonPanel extends Box {
 		
 		return button;
 	}
+
+	// ------------------------
+	// MediaPlayerListener handlers
+	// ------------------------
+	@Override public void stateChange(MediaPlayer mediaPlayer, MediaPlaybackState state) {
+		switch( state ) {
+		case Playing:
+			playPauseCardLayout.show(playPausePanel, "PAUSE");
+			break;
+		case Paused:
+			playPauseCardLayout.show(playPausePanel, "PLAY");
+			break;
+		case Closed:
+			playPauseCardLayout.show(playPausePanel, "PLAY");
+			break;
+		default:
+			break;
+		}
+	}
+	
+	@Override public void mediaOpened(MediaPlayer mediaPlayer, MediaSource mediaSource) {}
+	@Override public void progressChange(MediaPlayer mediaPlayer, float currentTimeInSecs) {}
+	@Override public void volumeChange(MediaPlayer mediaPlayer, double currentVolume) {}
+	@Override public void icyInfo(MediaPlayer mediaPlayer, String data) {}
 }
