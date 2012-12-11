@@ -18,6 +18,7 @@ package com.frostwire.gui.player;
 import java.io.File;
 
 import com.frostwire.alexandria.PlaylistItem;
+import com.limegroup.gnutella.MediaType;
 
 /**
  *  A wrapper for the source of an audio file that is currently playing
@@ -86,6 +87,29 @@ public class MediaSource {
     public PlaylistItem getPlaylistItem() {
         return playlistItem;
     }
+    
+    public String getPreparedFilename() {
+    	
+    	String filename = "";
+    	
+        if (getFile() != null) {
+            filename = getFile().getAbsolutePath();
+        } else if (getURL() != null) {
+            filename = getURL().toString();
+        } else if (getPlaylistItem() != null) {
+            filename = getPlaylistItem().getFilePath();
+        }
+        
+        return filename;
+    }
+    
+    public boolean isVideoMediaSource() {
+    
+    	String filename = getPreparedFilename();
+    	return MediaType.getVideoMediaType().matches(filename);
+        
+    }
+    
 
     @Override
     public boolean equals(Object obj) {
