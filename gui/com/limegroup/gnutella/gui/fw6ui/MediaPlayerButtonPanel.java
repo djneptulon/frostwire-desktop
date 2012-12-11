@@ -82,9 +82,7 @@ public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
 		setPreferredSize(new Dimension(BUTTON_PANEL_WIDTH, PANEL_HEIGHT));
 		
 		// ensure height
-		add(Box.createRigidArea(new Dimension(0,PANEL_HEIGHT)));
-		
-		add(Box.createRigidArea(new Dimension(OUTER_SPACER,0)));
+		add(Box.createRigidArea(new Dimension(OUTER_SPACER,PANEL_HEIGHT)));
 		
 		add(prevButton);
 		add(Box.createHorizontalGlue());
