@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -95,8 +96,9 @@ public class MediaPlayerButtonPanel extends Box {
 		setMaximumSize(new Dimension(BUTTON_PANEL_WIDTH, PANEL_HEIGHT));
 		setPreferredSize(new Dimension(BUTTON_PANEL_WIDTH, PANEL_HEIGHT));
 		
+		setBorder(BorderFactory.createEmptyBorder(0, OUTER_SPACER, 0, OUTER_SPACER));
+		
 		// ensure height
-		add(Box.createRigidArea(new Dimension(OUTER_SPACER,PANEL_HEIGHT)));
 		
 		add(prevButton);
 		add(Box.createHorizontalGlue());
@@ -111,8 +113,6 @@ public class MediaPlayerButtonPanel extends Box {
 		
 		add(Box.createHorizontalGlue());
 		add(nextButton);
-		
-		add(Box.createRigidArea(new Dimension(OUTER_SPACER,0)));
 		
 	}
 
