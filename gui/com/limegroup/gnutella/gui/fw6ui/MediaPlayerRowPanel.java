@@ -1,9 +1,10 @@
 package com.limegroup.gnutella.gui.fw6ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class MediaPlayerRowPanel extends JPanel {
 	
@@ -19,11 +20,14 @@ public class MediaPlayerRowPanel extends JPanel {
 	private void initializeUI() {
 	
 		setBackground(BACKGROUND_COLOR);
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		setOpaque(true);
 		
-		add(new MediaPlayerButtonPanel(), BorderLayout.LINE_START);
-		add(new MediaPlayerProgressPanel(), BorderLayout.CENTER);
-		add(new MediaPlayerVolumePanel(), BorderLayout.LINE_END);
+		add(new MediaPlayerButtonPanel());
+		add(MediaPlayerUtils.createSeparator(SwingConstants.VERTICAL));
+		add(new MediaPlayerProgressPanel());
+		add(MediaPlayerUtils.createSeparator(SwingConstants.VERTICAL));
+		add(new MediaPlayerVolumePanel());
 	}
 
 }

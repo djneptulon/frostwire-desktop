@@ -27,12 +27,13 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 
 public class ProgressSlider extends JPanel {
 
@@ -50,7 +51,7 @@ public class ProgressSlider extends JPanel {
 	
 	public ProgressSlider() {
 		
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		setOpaque(false);
         setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
         
@@ -58,7 +59,7 @@ public class ProgressSlider extends JPanel {
         Font font = new Font(elapsedTime.getFont().getFontName(), Font.BOLD, 14 );
         elapsedTime.setFont(font);
         elapsedTime.setForeground(Color.white);
-        elapsedTime.setAlignmentY(0.5f);
+        elapsedTime.setVerticalAlignment(SwingConstants.CENTER);
         add(elapsedTime, BorderLayout.WEST);
         
         progressSlider = new JSlider();
@@ -98,7 +99,7 @@ public class ProgressSlider extends JPanel {
         remainingTime = new JLabel("--:--");
         remainingTime.setFont(font);
         remainingTime.setForeground(Color.white);
-        remainingTime.setAlignmentY(0.5f);
+        remainingTime.setVerticalAlignment(SwingConstants.CENTER);
         add(remainingTime, BorderLayout.EAST);
         
 	}

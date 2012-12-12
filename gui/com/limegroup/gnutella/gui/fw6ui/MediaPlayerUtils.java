@@ -1,9 +1,11 @@
 package com.limegroup.gnutella.gui.fw6ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JSeparator;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
@@ -46,5 +48,15 @@ public class MediaPlayerUtils {
 		toggleButton.setToolTipText(I18n.tr(toolTipText));
 		
 		return toggleButton;
+	}
+	
+	public static JSeparator createSeparator( int direction) {
+		JSeparator sep = new JSeparator(direction);
+		sep.setForeground(Color.RED);
+		sep.setBackground(Color.BLACK);
+		sep.setSize(10, 100);
+		sep.setOpaque(true);
+		
+		return sep;
 	}
 }

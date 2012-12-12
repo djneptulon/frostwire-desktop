@@ -98,8 +98,6 @@ public class MediaPlayerButtonPanel extends Box {
 		
 		setBorder(BorderFactory.createEmptyBorder(0, OUTER_SPACER, 0, OUTER_SPACER));
 		
-		// ensure height
-		
 		add(prevButton);
 		add(Box.createHorizontalGlue());
 		
