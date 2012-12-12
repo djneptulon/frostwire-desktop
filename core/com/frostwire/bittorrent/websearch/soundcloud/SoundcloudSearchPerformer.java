@@ -33,7 +33,6 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.HttpFetcher;
-import com.frostwire.JsonEngine;
 import com.frostwire.bittorrent.websearch.WebSearchPerformer;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.util.JsonUtils;
@@ -59,7 +58,7 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
             LOG.error("Can't UTF-8 encode keywords: " + keywords, e);
         }
 
-        int pages = getMaxResults() / 10;
+        int pages = getMaxResults() / 4;
 
         for (int i = 0; i < pages; i++) {
             result.addAll(searchPage(i + 1, keywords));
@@ -91,8 +90,6 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(html);
 
-        JsonEngine engine = new JsonEngine();
-
         int max = getMaxResults();
 
         int i = 0;
@@ -118,15 +115,15 @@ public class SoundcloudSearchPerformer implements WebSearchPerformer {
 
         return result;
     }
-    
+
     private String buildThumbnailUrl(String str) {
         //http://i1.sndcdn.com/artworks-000019588274-le8r71-crop.jpg?be0edad
         //https://i1.sndcdn.com/artworks-000019588274-le8r71-t500x500.jpg
-        return "http://i1.sndcdn.com/artworks-"+str.substring(0,str.indexOf("-crop.")) + "-t300x300.jpg";
+        return "http://i1.sndcdn.com/artworks-" + str.substring(0, str.indexOf("-crop.")) + "-t300x300.jpg";
     }
 
     public URI getURI(int page, String encodedKeywords) throws URISyntaxException {
-        return new URI("http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords);
+        return new URI("http://soundcloud.com/tracks/search?page=" + page + "&q[fulltext]=" + encodedKeywords + "&q[downloadable]=true&advanced=1");
     }
 
     public String getRegex() {
