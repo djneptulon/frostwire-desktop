@@ -26,6 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -51,17 +52,19 @@ public class ProgressSlider extends JPanel {
 		
 		setLayout(new BorderLayout());
 		setOpaque(false);
-        setSize(new Dimension(411, 17));
+        setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
         
         elapsedTime = new JLabel("--:--");
         Font font = new Font(elapsedTime.getFont().getFontName(), Font.BOLD, 14 );
         elapsedTime.setFont(font);
         elapsedTime.setForeground(Color.white);
+        elapsedTime.setAlignmentY(0.5f);
         add(elapsedTime, BorderLayout.WEST);
         
         progressSlider = new JSlider();
         progressSlider.setOpaque(false);
         progressSlider.setFocusable(false);
+        progressSlider.setAlignmentY(0.5f);
         progressSlider.addChangeListener( new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if ( mousePressed ) {
@@ -95,6 +98,7 @@ public class ProgressSlider extends JPanel {
         remainingTime = new JLabel("--:--");
         remainingTime.setFont(font);
         remainingTime.setForeground(Color.white);
+        remainingTime.setAlignmentY(0.5f);
         add(remainingTime, BorderLayout.EAST);
         
 	}
