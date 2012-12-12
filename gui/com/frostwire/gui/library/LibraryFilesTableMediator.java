@@ -54,8 +54,8 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.upnp.UPnPManager;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -165,6 +165,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryFilesTableModel();
+        
+        //sort by modification time in descending order by default
+        //so user can quickly find newest files.
+        DATA_MODEL.sort(LibraryFilesTableDataLine.MODIFICATION_TIME_IDX);
+        DATA_MODEL.sort(LibraryFilesTableDataLine.MODIFICATION_TIME_IDX);
+        
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
         Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };
@@ -194,10 +200,25 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             menu.add(createAddToPlaylistSubMenu());
         }
 
-        boolean anyBeingShared = isAnyBeingShared();
-        WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
-        WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
-        menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
+        //sharing takes a while...
+        //there's an in between state while the file is changing from
+        //unshare to shared, this is "being shared"
+        boolean noneSharing = !isAnyBeingShared();
+        boolean allShared  = areAllSelectedFilesShared();
+        
+        WIFI_SHARE_ACTION.setEnabled(noneSharing && !allShared);
+        
+        //unsharing is immediate.
+        WIFI_UNSHARE_ACTION.setEnabled(noneSharing && allShared);
+        
+        //menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
+        if (WIFI_SHARE_ACTION.isEnabled()) {
+            menu.add(WIFI_SHARE_ACTION);
+        }
+        
+        if (WIFI_UNSHARE_ACTION.isEnabled()) {
+            menu.add(WIFI_UNSHARE_ACTION);
+        }
 
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
@@ -260,14 +281,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         for (int i : selectedRows) {
             LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
 
-            if (!libraryFilesTableDataLine.isShared()) {
+            if (Librarian.instance().getFileShareState(libraryFilesTableDataLine.getInitializeObject().getAbsolutePath()) != Librarian.FILE_STATE_SHARED) {
                 allAreShared = false;
                 break;
             }
         }
         return allAreShared;
     }
-
+    
     private boolean areAllSelectedFilesPlayable() {
         boolean selectionIsAllAudio = true;
         int[] selectedRows = TABLE.getSelectedRows();
@@ -626,7 +647,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return;
         }
         if (getMediaType().equals(MediaType.getAudioMediaType()) && MediaPlayer.isPlayableFile(line.getFile())) {
-            MediaPlayer.instance().asyncLoadMedia(new MediaSource(line.getFile()), true, false, null, getFilesView());
+            MediaPlayer.instance().asyncLoadMedia(new MediaSource(line.getFile()), true, true, null, getFilesView());
             return;
         }
 
@@ -1043,8 +1064,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
             putValue(LimeAction.SHORT_NAME, actionName);
             putValue(Action.LONG_DESCRIPTION, actionName + " " + I18n.tr("file on local Wi-Fi network"));
-            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_unshared" : "file_shared"));
-            putValue(LimeAction.ICON_NAME, share ? "WIFI_UNSHARED" : "WIFI_SHARED");
+            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_shared":"file_unshared"));
+            putValue(LimeAction.ICON_NAME, share ? "WIFI_SHARED":"WIFI_UNSHARED");
         }
 
         @Override
@@ -1055,8 +1076,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 File file = DATA_MODEL.getFile(index);
                 LibraryFilesTableDataLine dataLine = DATA_MODEL.get(i);
                 try {
-                    dataLine.setShared(share);
-                    Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
+                    //this is so that we avoid re-sharing what's already shared.
+                    //we nest this logic for clarity.
+                    if (share) {
+                        if (!Librarian.instance().isFileShared(file.getAbsolutePath())) {
+                            actualShare(dataLine, file);
+                        }
+                    } 
+                    //this happens only when.
+                    else {
+                        actualShare(dataLine,file);
+                    }
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -1064,6 +1094,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
 
             UPnPManager.instance().refreshPing();
+        }
+        
+        private void actualShare(LibraryFilesTableDataLine dataLine, File file) {
+            dataLine.setShared(share);
+            Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
         }
     }
 }

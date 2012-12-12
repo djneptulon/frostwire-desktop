@@ -210,7 +210,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         case MODIFICATION_TIME_IDX:
             return new PlayableCell(this, new Date(initializer.lastModified()), isPlaying, idx);
         case SHARE_IDX:
-            return new FileShareCell(initializer.getAbsolutePath(), shared);
+            return new FileShareCell(this, initializer.getAbsolutePath(), shared);
         }
         return null;
     }
@@ -262,7 +262,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 
             new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"), 108, true, PlayableCell.class),
 
-            new LimeTableColumn(MODIFICATION_TIME_IDX, "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"), 20, false, PlayableCell.class) };
+            new LimeTableColumn(MODIFICATION_TIME_IDX, "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"), 20, true, PlayableCell.class) };
             ltColumns = temp;
         }
         return ltColumns;
