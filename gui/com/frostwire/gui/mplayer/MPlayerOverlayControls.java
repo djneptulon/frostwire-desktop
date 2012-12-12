@@ -218,8 +218,8 @@ public class MPlayerOverlayControls extends JDialog implements ProgressSliderLis
         // ----------------
         progressSlider = new ProgressSlider();
         progressSlider.addProgressSliderListener(this);
-        progressSlider.setLocation(20, 70);
-        progressSlider.setSize(new Dimension(411, 17));
+        progressSlider.setLocation(0, 70);
+        progressSlider.setSize(new Dimension(451, 17));
         progressSlider.addMouseListener(this);
 		progressSlider.addMouseMotionListener(this);
 		panel.add(progressSlider);
