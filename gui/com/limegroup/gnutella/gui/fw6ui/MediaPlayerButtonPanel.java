@@ -2,7 +2,6 @@ package com.limegroup.gnutella.gui.fw6ui;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,16 +9,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.mplayer.MediaPlaybackState;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
 	
@@ -45,28 +40,28 @@ public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
 		
 		// initialize buttons
 		// --------------------
-		JButton playButton = createMediaButton("fc_play", I18n.tr("Play"));
+		JButton playButton = MediaPlayerUtils.createMediaButton("fc_play", I18n.tr("Play"));
 		playButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onPlayPressed();
 			}
 		});
 		
-		JButton pauseButton = createMediaButton("fc_pause", I18n.tr("Pause"));
+		JButton pauseButton = MediaPlayerUtils.createMediaButton("fc_pause", I18n.tr("Pause"));
 		pauseButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onPausePressed();
 			}
 		});
 		
-		JButton nextButton = createMediaButton("fc_next", I18n.tr("Next"));
+		JButton nextButton = MediaPlayerUtils.createMediaButton("fc_next", I18n.tr("Next"));
 		nextButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onFastForwardPressed();
 			}
 		});
 		
-		JButton prevButton = createMediaButton("fc_previous", I18n.tr("Previous"));
+		JButton prevButton = MediaPlayerUtils.createMediaButton("fc_previous", I18n.tr("Previous"));
 		prevButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onRewindPressed();
@@ -101,23 +96,7 @@ public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
 		add(Box.createRigidArea(new Dimension(OUTER_SPACER,0)));
 		
 	}
-	
-	private JButton createMediaButton(String name, String tipText ) {
-		JButton button = new JButton();
-		
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(ThemeSettings.isNativeOSXTheme());
-		button.setRolloverEnabled(true);
-		button.setIcon(GUIMediator.getThemeImage(name));
-		button.setHorizontalAlignment(SwingConstants.CENTER);
-		button.setPreferredSize(new Dimension( button.getIcon().getIconWidth(), 
-											   button.getIcon().getIconHeight()));
-		button.setFocusable(false);
-		button.setMargin(new Insets(0,0,0,0));
-		button.setToolTipText(tipText);  
-		
-		return button;
-	}
+
 
 	// ------------------------
 	// MediaPlayerListener handlers
