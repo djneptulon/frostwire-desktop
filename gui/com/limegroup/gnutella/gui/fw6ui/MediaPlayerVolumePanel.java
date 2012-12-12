@@ -17,10 +17,7 @@ import javax.swing.event.ChangeListener;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerAdapter;
-import com.frostwire.gui.player.MediaPlayerListener;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.player.RepeatMode;
-import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 public class MediaPlayerVolumePanel extends JPanel {

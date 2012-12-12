@@ -11,12 +11,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaPlayerAdapter;
 import com.frostwire.gui.player.MediaPlayerListener;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.I18n;
 
-public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
+public class MediaPlayerButtonPanel extends Box {
 	
 	private static final long serialVersionUID = 85874961592690100L;
 	
@@ -31,9 +32,27 @@ public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
 		
 		super(BoxLayout.LINE_AXIS);
 		
+		// initialize UI elements
 		initializeUI();
 		
-		MediaPlayer.instance().addMediaPlayerListener(this);
+		// initialize media player state handling
+		MediaPlayer.instance().addMediaPlayerListener( new MediaPlayerAdapter() {
+			@Override public void stateChange(MediaPlayer mediaPlayer, MediaPlaybackState state) {
+				switch( state ) {
+				case Playing:
+					playPauseCardLayout.show(playPausePanel, "PAUSE");
+					break;
+				case Paused:
+					playPauseCardLayout.show(playPausePanel, "PLAY");
+					break;
+				case Closed:
+					playPauseCardLayout.show(playPausePanel, "PLAY");
+					break;
+				default:
+					break;
+				}
+			}
+		});
 	}
 	
 	private void initializeUI() {
@@ -97,28 +116,4 @@ public class MediaPlayerButtonPanel extends Box implements MediaPlayerListener {
 		
 	}
 
-
-	// ------------------------
-	// MediaPlayerListener handlers
-	// ------------------------
-	@Override public void stateChange(MediaPlayer mediaPlayer, MediaPlaybackState state) {
-		switch( state ) {
-		case Playing:
-			playPauseCardLayout.show(playPausePanel, "PAUSE");
-			break;
-		case Paused:
-			playPauseCardLayout.show(playPausePanel, "PLAY");
-			break;
-		case Closed:
-			playPauseCardLayout.show(playPausePanel, "PLAY");
-			break;
-		default:
-			break;
-		}
-	}
-	
-	@Override public void mediaOpened(MediaPlayer mediaPlayer, MediaSource mediaSource) {}
-	@Override public void progressChange(MediaPlayer mediaPlayer, float currentTimeInSecs) {}
-	@Override public void volumeChange(MediaPlayer mediaPlayer, double currentVolume) {}
-	@Override public void icyInfo(MediaPlayer mediaPlayer, String data) {}
 }
