@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.fw6ui;
+package com.limegroup.gnutella.gui.fw6ui.mediaplayerpanel;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -13,12 +13,10 @@ import javax.swing.JPanel;
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerAdapter;
-import com.frostwire.gui.player.MediaPlayerListener;
-import com.frostwire.gui.player.MediaSource;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.I18n;
 
-public class MediaPlayerButtonPanel extends Box {
+public class MPButtonPanel extends Box {
 	
 	private static final long serialVersionUID = 85874961592690100L;
 	
@@ -29,7 +27,7 @@ public class MediaPlayerButtonPanel extends Box {
 	private CardLayout playPauseCardLayout = null;
 	private JPanel playPausePanel = null;
 	
-	public MediaPlayerButtonPanel() {
+	public MPButtonPanel() {
 		
 		super(BoxLayout.LINE_AXIS);
 		
@@ -60,28 +58,28 @@ public class MediaPlayerButtonPanel extends Box {
 		
 		// initialize buttons
 		// --------------------
-		JButton playButton = MediaPlayerUtils.createMediaButton("fc_play", I18n.tr("Play"));
+		JButton playButton = MPUtils.createMediaButton("fc_play", I18n.tr("Play"));
 		playButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onPlayPressed();
 			}
 		});
 		
-		JButton pauseButton = MediaPlayerUtils.createMediaButton("fc_pause", I18n.tr("Pause"));
+		JButton pauseButton = MPUtils.createMediaButton("fc_pause", I18n.tr("Pause"));
 		pauseButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onPausePressed();
 			}
 		});
 		
-		JButton nextButton = MediaPlayerUtils.createMediaButton("fc_next", I18n.tr("Next"));
+		JButton nextButton = MPUtils.createMediaButton("fc_next", I18n.tr("Next"));
 		nextButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onFastForwardPressed();
 			}
 		});
 		
-		JButton prevButton = MediaPlayerUtils.createMediaButton("fc_previous", I18n.tr("Previous"));
+		JButton prevButton = MPUtils.createMediaButton("fc_previous", I18n.tr("Previous"));
 		prevButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
 				MPlayerUIEventHandler.instance().onRewindPressed();

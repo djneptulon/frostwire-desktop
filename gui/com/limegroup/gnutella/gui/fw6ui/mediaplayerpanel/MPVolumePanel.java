@@ -1,5 +1,6 @@
-package com.limegroup.gnutella.gui.fw6ui;
+package com.limegroup.gnutella.gui.fw6ui.mediaplayerpanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,14 +14,13 @@ import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerAdapter;
 import com.frostwire.gui.player.RepeatMode;
 import com.limegroup.gnutella.gui.GUIMediator;
 
-public class MediaPlayerVolumePanel extends JPanel {
+public class MPVolumePanel extends JPanel {
 	
 	private static final long serialVersionUID = -21533825892232966L;
 
@@ -29,7 +29,7 @@ public class MediaPlayerVolumePanel extends JPanel {
 	
 	private JSlider volumeSlider;
 	
-	public MediaPlayerVolumePanel() {
+	public MPVolumePanel() {
 				
 		// initialize UI
 		initializeUI();
@@ -44,15 +44,16 @@ public class MediaPlayerVolumePanel extends JPanel {
 	
 	private void initializeUI() {
 		
-		setLayout(new BoxLayout( this, BoxLayout.PAGE_AXIS));
+		//setUI(new BasicPanelUI());
 		
+		setLayout(new BoxLayout( this, BoxLayout.PAGE_AXIS));
 		setOpaque(false);
+		setBackground(new Color(0,0,0,255));
 		setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
 		
 		setMinimumSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 		setMaximumSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 		setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-		
 		
 		// shuffle / loop panel
 		// ---------------------
@@ -61,7 +62,7 @@ public class MediaPlayerVolumePanel extends JPanel {
 		shuffleButtonPanel.setLayout( new BoxLayout(shuffleButtonPanel, BoxLayout.LINE_AXIS) );
 		
 		// shuffle button
-		JToggleButton shuffleButton = MediaPlayerUtils.createMediaToggleButton("shuffle_on", "shuffle_off", "Shuffle Songs");
+		JToggleButton shuffleButton = MPUtils.createMediaToggleButton("shuffle_on", "shuffle_off", "Shuffle Songs");
 		shuffleButton.setSelected(MediaPlayer.instance().isShuffle());
 		shuffleButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
@@ -72,7 +73,7 @@ public class MediaPlayerVolumePanel extends JPanel {
 		shuffleButtonPanel.add(shuffleButton);
 		
 		// loop button
-		JToggleButton loopButton = MediaPlayerUtils.createMediaToggleButton("loop_on", "loop_off", "Repeat Songs");
+		JToggleButton loopButton = MPUtils.createMediaToggleButton("loop_on", "loop_off", "Repeat Songs");
 		loopButton.setSelected(MediaPlayer.instance().getRepeatMode() == RepeatMode.All);
 		loopButton.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent arg0) {
@@ -119,6 +120,5 @@ public class MediaPlayerVolumePanel extends JPanel {
         volumeSliderPanel.add(volMaxLabel);
         
         add(volumeSliderPanel);
-		
 	}
 }

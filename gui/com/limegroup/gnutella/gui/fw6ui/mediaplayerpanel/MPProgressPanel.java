@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.fw6ui;
+package com.limegroup.gnutella.gui.fw6ui.mediaplayerpanel;
 
 
 import java.awt.BorderLayout;
@@ -11,13 +11,13 @@ import com.frostwire.gui.player.MPlayerUIEventHandler;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaPlayerAdapter;
 
-public class MediaPlayerProgressPanel extends JPanel {
+public class MPProgressPanel extends JPanel {
 
 	private static final long serialVersionUID = 2626046650466778244L;
 
 	ProgressSlider progressSlider = null;
 	
-	public MediaPlayerProgressPanel() {
+	public MPProgressPanel() {
 		
 		initializeUI();
 		

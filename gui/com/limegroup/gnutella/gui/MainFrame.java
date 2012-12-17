@@ -54,7 +54,7 @@ import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
-import com.limegroup.gnutella.gui.fw6ui.MediaPlayerRowPanel;
+import com.limegroup.gnutella.gui.fw6ui.mediaplayerpanel.MediaPlayerPanel;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
@@ -104,7 +104,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     private StatusLine STATUS_LINE;
 
-    private MediaPlayerRowPanel MEDIAPLAYER_PANEL;
+    private MediaPlayerPanel MEDIAPLAYER_PANEL;
     
     /**
      * Handle the <tt>MenuMediator</tt> for use in changing the menu
@@ -441,9 +441,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         return STATUS_LINE;
     }
     
-    final private MediaPlayerRowPanel getMediaPlayerRowPanel() {
+    final private MediaPlayerPanel getMediaPlayerRowPanel() {
     	if (MEDIAPLAYER_PANEL == null) {
-    		MEDIAPLAYER_PANEL = new MediaPlayerRowPanel();
+    		MEDIAPLAYER_PANEL = new MediaPlayerPanel();
     	}
     	
     	return MEDIAPLAYER_PANEL;

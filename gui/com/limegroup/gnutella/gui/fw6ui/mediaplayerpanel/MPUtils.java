@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.fw6ui;
+package com.limegroup.gnutella.gui.fw6ui.mediaplayerpanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,8 +13,8 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
-public class MediaPlayerUtils {
-	private MediaPlayerUtils() {} // to protect against instantiation
+public class MPUtils {
+	private MPUtils() {} // to protect against instantiation
 	
 	public static JButton createMediaButton(String name, String tipText ) {
 		
