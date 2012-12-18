@@ -54,7 +54,7 @@ import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
-import com.limegroup.gnutella.gui.fw6ui.mediaplayerpanel.MediaPlayerPanel;
+import com.limegroup.gnutella.gui.fw6ui.MediaPlayerPanel;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
