@@ -35,6 +35,8 @@ import java.awt.event.WindowStateListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -242,10 +244,11 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //ADD TABBED PANE
         contentPane.add(TABBED_PANE, BorderLayout.CENTER);
 
-        //ADD STATUS LINE
-        getStatusLine();
-        
-        contentPane.add(getMediaPlayerRowPanel(), BorderLayout.PAGE_END);
+        // STATUS / MEDIA PLAYER PANE - adding status line stacked below media player
+        Box status_media = new Box(BoxLayout.PAGE_AXIS);
+        status_media.add( getMediaPlayerRowPanel() );
+        status_media.add( getStatusLine().getComponent() );
+        contentPane.add(status_media, BorderLayout.PAGE_END);
 
         ThemeMediator.addThemeObserver(this);
         GUIMediator.addRefreshListener(this);
