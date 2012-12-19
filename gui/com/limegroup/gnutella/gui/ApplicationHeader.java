@@ -100,7 +100,7 @@ public class ApplicationHeader extends JPanel implements ThemeObserver, RefreshL
         
         addEastPanel();
         addUpdateButton();
-        addAudioPlayerComponent();
+        //addAudioPlayerComponent();
         
         GUIMediator.addRefreshListener(this);
         
