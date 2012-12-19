@@ -51,10 +51,14 @@ public class MPUtils {
 	}
 	
 	public static JSeparator createSeparator( int direction) {
+		Dimension size = new Dimension(6, 50);
+		
 		JSeparator sep = new JSeparator(direction);
-		sep.setForeground(Color.RED);
-		sep.setBackground(Color.BLACK);
-		sep.setSize(10, 100);
+		sep.setForeground(Color.WHITE);
+		sep.setBackground(new Color(0,0,0,0));
+		sep.setPreferredSize(size);
+		sep.setMinimumSize(size);
+		sep.setMaximumSize(size);
 		sep.setOpaque(true);
 		
 		return sep;
