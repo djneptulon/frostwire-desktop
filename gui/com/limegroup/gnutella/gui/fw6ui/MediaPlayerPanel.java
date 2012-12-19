@@ -25,7 +25,7 @@ public class MediaPlayerPanel extends JPanel {
 	}
 	
 	private void initializeUI() {
-		setUI(new BasicPanelUI());
+		//setUI(new BasicPanelUI());
 		
 		setBackground(BACKGROUND_COLOR);
 		setOpaque(true);

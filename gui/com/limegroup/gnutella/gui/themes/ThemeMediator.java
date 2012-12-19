@@ -237,6 +237,9 @@ public class ThemeMediator {
         UIManager.put("TabbedPaneUI", "com.limegroup.gnutella.gui.themes.SkinTabbedPaneUI");
         UIManager.put("ProgressBarUI", "com.limegroup.gnutella.gui.themes.SkinProgressBarUI");
         
+        // fw6ui: overriding substance with basic java UI behaviors
+        UIManager.put("PanelUI", "javax.swing.plaf.basic.BasicPanelUI");
+        
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
     
