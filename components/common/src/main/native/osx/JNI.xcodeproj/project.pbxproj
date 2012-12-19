@@ -39,7 +39,7 @@
 		F96C68A70DCEAD97006A4F2B /* MacOSXUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE53E70DAC00ED00122CBF /* MacOSXUtils.m */; };
 		F96C68A90DCEAD97006A4F2B /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9657FB50DA1462300F02016 /* JavaVM.framework */; };
 		F96C68AA0DCEAD97006A4F2B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F965808F0DA1466600F02016 /* Cocoa.framework */; };
-		F96C68AB0DCEAD97006A4F2B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AE53EA0DAC02D000122CBF /* Foundation.framework */; };
+		F96C68AB0DCEAD97006A4F2B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AE53EA0DAC02D000122CBF /* Foundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F96C68C10DCEAECA006A4F2B /* Growl.m in Sources */ = {isa = PBXBuildFile; fileRef = F9980CCA0DAD3A8E005E88C9 /* Growl.m */; };
 		F96C68C30DCEAECA006A4F2B /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9657FB50DA1462300F02016 /* JavaVM.framework */; };
 		F96C68C40DCEAECA006A4F2B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F965808F0DA1466600F02016 /* Cocoa.framework */; };
